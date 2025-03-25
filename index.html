@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ankara Üniversitesi Öğrenci Bilgi Sistemi</title>
+    <style>
+        /* Genel Stiller */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Login Sayfası Stilleri */
+        .login-page {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .login-page header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-page .logo {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .login-page .title {
+            flex-grow: 1;
+        }
+
+        .login-page h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .login-page main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+
+        .login-form h2 {
+            margin-top: 0;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            margin-left: -10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #457aff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-page footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        /* OBS Sayfası Stilleri */
+        .obs-page {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .sidebar .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .logo img {
+            width: 80px;
+            height: auto;
+        }
+
+        .sidebar nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar nav ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar nav ul li a {
+            color: #333;
+            text-decoration: none;
+            display: block;
+            padding: 5px;
+        }
+
+        #themeToggle {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        main {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        main header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .user-info img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .alert-card {
+            background-color: #ff0000;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .info-card {
+            background-color: white;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .info-card h3 {
+            margin-top: 0;
+            font-size: 16px;
+        }
+
+        /* Tema stilleri */
+        body.light-theme {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        body.dark-theme {
+            background-color: #333;
+            color: #f0f0f0;
+        }
+
+        body.dark-theme .sidebar {
+            background-color: #222;
+        }
+
+        body.dark-theme .sidebar nav ul li a {
+            color: #f0f0f0;
+        }
+
+        body.dark-theme .info-card {
+            background-color: #444;
+            color: #f0f0f0;
+        }
+
+        body.dark-theme #themeToggle {
+            background-color: #555;
+        }
+
+        .sidebar nav ul li a#logoutLink {
+            color: #ff0000;
+        }
+
+        body.dark-theme .sidebar nav ul li a#logoutLink {
+            color: #ff6666;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginPage" class="login-page">
+        <header>
+            <img src="https://upload.wikimedia.org/wikipedia/tr/5/5f/Ankara_%C3%9Cniversitesi_logosu.png" alt="Ankara Üniversitesi Logo" class="logo">
+            <div class="title">
+                <h1>ANKARA ÜNİVERSİTESİ</h1>
+                <p>KAMPÜS BİLGİ YÖNETİM SİSTEMİ</p>
+            </div>
+        </header>
+        <main>
+            <div class="login-form">
+                <h2>ÖNLİSANS/LİSANS ÖĞRENCİ BİLGİ FORMU GİRİŞİ</h2>
+                <form id="loginForm">
+                    <input type="text" id="tcInput" placeholder="TC Kimlik Numarası" required>
+                    <input type="text" id="serialInput" placeholder="Cüzdan Serisi ve Numarası" required>
+                    <button type="submit">Kimlik Doğrula</button>
+                </form>
+            </div>
+        </main>
+        <footer>
+            Sayfa 669APPW107 sunucusu tarafından 24 ms de yüklenmiştir.
+        </footer>
+    </div>
+
+    <div id="obsPage" class="obs-page" style="display: none;">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="https://upload.wikimedia.org/wikipedia/tr/5/5f/Ankara_%C3%9Cniversitesi_logosu.png" alt="Ankara Üniversitesi Logo">
+                <h2>Ankara Üniversitesi</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Genel İşlemler</a></li>
+                    <li><a href="#">Ders ve Dönem İşlemleri</a></li>
+                    <li><a href="#">Form İşlemleri</a></li>
+                    <li><a href="#">İlişik Kesme Talebi</a></li>
+                    <li><a href="#">İntibak Başvuru</a></li>
+                    <li><a href="#">Hazırlık İşlemleri</a></li>
+                    <li><a href="#">Başvuru İşlemleri</a></li>
+                    <li><a href="#">Staj Başvuru</a></li>
+                    <li><a href="#">Kullanıcı İşlemleri</a></li>
+                    <li><a href="#" id="logoutLink">Çıkış</a></li>
+                </ul>
+            </nav>
+            <button id="themeToggle">Koyu Tema</button>
+        </aside>
+        <main>
+            <header>
+                <span class="term">2024-2025 Güz Dönemi</span>
+                <div class="user-info">
+                    <img src="user-photo.jpg" alt="Kullanıcı Fotoğrafı">
+                    <span>Cuma KARADAŞ</span>
+                </div>
+            </header>
+            <div class="content">
+                <div class="alert-card">
+                    <p>Uyarı! Yetki Yeterliliğe Sahip Öğrenci</p>
+                </div>
+                <div class="info-cards">
+                    <div class="info-card">
+                        <h3>Aktif Akademik Dönem Bilgileri</h3>
+                        <p>2024-2025 Güz Dönemi</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Danışman Bilgileri</h3>
+                        <p>Arş. Gör. Hasan TAŞ</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Öğrenim Bilgileri</h3>
+                        <p>Bilişim Teknolojileri Fak./Veri Bilimi Pr.</p>
+                        <p>2. Sınıf</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Kayıt Bilgileri</h3>
+                        <p>Kayıt Tarihi: 08.07.2024</p>
+                        <p>AGNO: 2.75</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginPage = document.getElementById('loginPage');
+            const obsPage = document.getElementById('obsPage');
+            const loginForm = document.getElementById('loginForm');
+            const sidebarLinks = document.querySelectorAll('.sidebar nav ul li a');
+            const logoutLink = document.getElementById('logoutLink');
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                var tc = document.getElementById('tcInput').value;
+                var serial = document.getElementById('serialInput').value;
+                
+                if (tc === '12345678901' && serial === 'A01') {
+                    loginPage.style.display = 'none';
+                    obsPage.style.display = 'flex';
+                } else {
+                    alert('Hatalı TC Kimlik Numarası veya Cüzdan Serisi/Numarası.');
+                }
+            });
+
+            sidebarLinks.forEach(function(link) {
+                if (link.id !== 'logoutLink') {
+                    link.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        alert('Danışmanınız ile iletişime geçiniz. Öğrenci yetki yeterliliğine sahip.');
+                    });
+                }
+            });
+
+            logoutLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                obsPage.style.display = 'none';
+                loginPage.style.display = 'flex';
+            });
+
+            body.classList.add('light-theme');
+
+            themeToggle.addEventListener('click', function() {
+                if (body.classList.contains('light-theme')) {
+                    body.classList.remove('light-theme');
+                    body.classList.add('dark-theme');
+                    themeToggle.textContent = 'Açık Tema';
+                } else {
+                    body.classList.remove('dark-theme');
+                    body.classList.add('light-theme');
+                    themeToggle.textContent = 'Koyu Tema';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
